@@ -1,3 +1,10 @@
+const Keycode = {
+  ESC: 27,
+  ENTER: 13,
+  ARROW_LEFT: 37,
+  ARROW_RIGHT: 39
+};
+
 // Получение случайного целого числа из переданного диапазона включительно
 const getRandomPositiveInteger = (a, b) => {
   const lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
@@ -12,4 +19,23 @@ const getRandomArrayElement = (elements) => elements[getRandomPositiveInteger(0,
 // Проверка строки на максимальную длину
 const checkStringLength = (string, maxLenght) => string.length <= maxLenght;
 
-export {getRandomPositiveInteger, getRandomArrayElement, checkStringLength};
+// Создание любого элемента, опционально с классом и тектовым содержимым
+const createElement = (tagName, className, text) => {
+  const element = document.createElement(tagName);
+  if (className) {
+    element.classList.add(className);
+  }
+  if (text) {
+    element.textContent = text;
+  }
+  return element;
+};
+
+// Выполнение действия по нажатию на кнопку
+const checkActionCode = (evt, key, action) => {
+  if (evt.keyCode === key) {
+    action();
+  }
+};
+
+export {Keycode, getRandomPositiveInteger, getRandomArrayElement, checkStringLength, createElement, checkActionCode};
