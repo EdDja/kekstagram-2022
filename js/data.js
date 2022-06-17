@@ -1,4 +1,4 @@
-import {getRandomPositiveInteger, getRandomArrayElement} from './util.js';
+import { getRandomPositiveInteger, getRandomArrayElement } from './util.js';
 
 const PICTURES_COUNT = 25;
 
@@ -37,18 +37,18 @@ const AvatarsRange = {
   MAX: 6,
 };
 
-const createComment = () => ({
+const generateComment = () => ({
   id: getRandomPositiveInteger(1, 1000),
   avatar: `img/avatar-${getRandomPositiveInteger(AvatarsRange.MIN, AvatarsRange.MAX)}.svg`,
   message: getRandomArrayElement(COMMENTS),
   name: getRandomArrayElement(AUTHOR_NAMES)
 });
 
-const createPicture = (index = 1) => {
-  const comments = Array.from({length: getRandomPositiveInteger(1, 5)}, createComment);
+const generatePicture = (index = 1) => {
+  const comments = Array.from({length: getRandomPositiveInteger(1, 5)}, generateComment);
 
   return {
-    id: index,
+    id: index - 1,
     url: `photos/${index}.jpg`,
     description: getRandomArrayElement(DESCRIPTIONS),
     likes: getRandomPositiveInteger(LikesRange.MIN, LikesRange.MAX),
@@ -56,6 +56,6 @@ const createPicture = (index = 1) => {
   };
 };
 
-const createPictures = () => Array.from({length: PICTURES_COUNT}, (element, index) => createPicture(index + 1));
+const generatePictures = () => Array.from({length: PICTURES_COUNT}, (element, index) => generatePicture(index + 1));
 
-export {createPictures};
+export {generatePictures};
