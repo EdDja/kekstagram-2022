@@ -38,4 +38,7 @@ const checkActionCode = (evt, key, action) => {
   }
 };
 
-export {Keycode, getRandomPositiveInteger, getRandomArrayElement, checkStringLength, createElement, checkActionCode};
+// Проверка нажатой клавиши
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+export {Keycode, getRandomPositiveInteger, getRandomArrayElement, checkStringLength, createElement, checkActionCode, isEscapeKey};

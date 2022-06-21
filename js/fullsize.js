@@ -1,4 +1,4 @@
-import { Keycode, checkActionCode, createElement } from './util.js';
+import { createElement, isEscapeKey } from './util.js';
 
 const AVATAR_SIZE = '35';
 const body = document.querySelector('body');
@@ -71,7 +71,10 @@ const onBigPictureCloseClick = () => {
 };
 
 const onBigPictureEscKeydown = (evt) => {
-  checkActionCode(evt, Keycode.ESC, closeBigPicture);
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    closeBigPicture();
+  }
 };
 
 export {fillBigPicture};
