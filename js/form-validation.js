@@ -10,7 +10,6 @@ const uploadForm = document.querySelector('#upload-select-image');
 const hashtagsInput = document.querySelector('.text__hashtags');
 const commentInput = document.querySelector('.text__description');
 
-
 // Инициализация Pristine.js
 const pristine = new Pristine(uploadForm, {
   classTo: 'img-upload__item',
@@ -19,10 +18,8 @@ const pristine = new Pristine(uploadForm, {
   errorTextClass: 'img-upload__error-message',
 });
 
-
 // Проверка длины комментария
 const validateComment = (value) => value.length <= MAX_COMMENT_LENGHT;
-
 
 // Проверка хэштегов на соответствие паттерну Hashtag.PATTERN
 const checkHashtagsPattern = (value) => {
@@ -34,21 +31,20 @@ const checkHashtagsPattern = (value) => {
   return hashtagsArray.every((hashtag) => Hashtag.PATTERN.test(hashtag));
 };
 
-
 // Проверка на повторяющиеся хэштеги
 const checkHashtagsDuplicate = (value) => {
   const hashtagsArray = value.toLowerCase().trim().split(Hashtag.SEPARATOR).filter((hashtag) => hashtag !== '');
   const uniqueHashtags = new Set(hashtagsArray);
+
   return hashtagsArray.length === uniqueHashtags.size;
 };
-
 
 // Проверка количества хэштегов — не больше Hashtag.MAX_COUNT
 const checkHashtagsCount = (value) => {
   const hashtagsArray = value.trim().split(Hashtag.SEPARATOR).filter((hashtag) => hashtag !== '');
+
   return hashtagsArray.length <= Hashtag.MAX_COUNT;
 };
-
 
 pristine.addValidator(
   commentInput,
@@ -73,7 +69,6 @@ pristine.addValidator(
   checkHashtagsDuplicate,
   'Хэштеги не должны повторяться'
 );
-
 
 // Обработчик на отправку формы
 uploadForm.addEventListener('submit', (evt) => {
