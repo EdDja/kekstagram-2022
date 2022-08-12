@@ -12,10 +12,8 @@ const uploadForm = document.querySelector('#upload-select-image');
 const fileUpload = document.querySelector('#upload-file');
 const editModal = document.querySelector('.img-upload__overlay');
 const editModalClose = document.querySelector('#upload-cancel');
-
 const hashtagsInput = document.querySelector('.text__hashtags');
 const commentInput = document.querySelector('.text__description');
-
 const sliderContainer = document.querySelector('.effect-level');
 const sliderElement = document.querySelector('.effect-level__slider');
 const valueElement = document.querySelector('.effect-level__value');
@@ -94,19 +92,14 @@ const onScaleBiggerClick = () => {
 
 // Применение эффектов к изображению
 const setEffect = (evt) => {
-  // reset previous effect
-  resetEffect();
+  resetEffect(); // reset previous effect
+  activeEffect = getEffect(evt); // get target effect
 
-  // get target effect
-  activeEffect = getEffect(evt);
-
-  // if no effect, return
-  if (activeEffect === '') {
+  if (activeEffect === '') { // if no effect, return
     return;
   }
 
-  // else, init slider and set effect
-  initSlider(activeEffect);
+  initSlider(activeEffect); // else, init slider and set effect
   sliderContainer.classList.remove('hidden');
   imagePreview.classList.add(activeEffect.class);
 };
@@ -157,3 +150,5 @@ const onEditModalEscKeydown = (evt) => {
 };
 
 fileUpload.addEventListener('change', onFileUploadChange);
+
+export {closeEditModal};
