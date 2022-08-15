@@ -3,8 +3,13 @@ import './data.js';
 import './get-effect.js';
 import './edit-picture.js';
 import './validate-form.js';
+import './upload-picture.js';
 import './show-fullsize-picture.js';
 import { getData } from './api.js';
 import { renderPictures } from './render-pictures.js';
+import { initPicturesFilter } from './filter-pictures.js';
 
-getData(renderPictures);
+getData((pictures) => {
+  renderPictures(pictures);
+  initPicturesFilter(pictures);
+});
