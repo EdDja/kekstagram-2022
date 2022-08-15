@@ -13,6 +13,16 @@ const getRandomPositiveInteger = (a, b) => {
   return Math.floor(result);
 };
 
+// Перемешивание элементов массива
+const shuffle = (array) => {
+  for (let i = array.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+
+  return array;
+};
+
 // Поиск случайного элемента в переданном массиве
 const getRandomArrayElement = (elements) => elements[getRandomPositiveInteger(0, elements.length - 1)];
 
@@ -63,4 +73,26 @@ const showAlertMessage = (message, time) => {
   }, time);
 };
 
-export {Keycode, getRandomPositiveInteger, getRandomArrayElement, checkStringLength, createElement, checkActionCode, isEscapeKey, showAlertMessage};
+const debounce = (callback, timeoutDelay = 500) => {
+  let timeoutId;
+
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
+
+const throttle = (callback, delayBetweenFrames) => {
+  let lastTime = 0;
+
+  return (...rest) => {
+    const now = new Date();
+
+    if (now - lastTime >= delayBetweenFrames) {
+      callback.apply(this, rest);
+      lastTime = now;
+    }
+  };
+};
+
+export {Keycode, getRandomPositiveInteger, getRandomArrayElement, checkStringLength, createElement, checkActionCode, isEscapeKey, showAlertMessage, debounce, throttle, shuffle};
