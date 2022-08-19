@@ -1,6 +1,6 @@
-import { createElement, isEscapeKey } from './util.js';
+import { isEscapeKey } from './util.js';
 
-const AVATAR_SIZE = '35';
+const COMMENTS_LIMIT = 5;
 const body = document.querySelector('body');
 const bigPicture = body.querySelector('.big-picture');
 const bigPictureImage = bigPicture.querySelector('img');
@@ -8,24 +8,18 @@ const pictureCaption = bigPicture.querySelector('.social__caption');
 const pictureLikesCount = bigPicture.querySelector('.likes-count');
 const pictureCommentsCount = bigPicture.querySelector('.comments-count');
 const commentsList = bigPicture.querySelector('.social__comments');
-const bigPictureClose = bigPicture.querySelector('#picture-cancel');
+const commentTemplate = bigPicture.querySelector('.social__comment');
 const bigPictureCommentsCount = bigPicture.querySelector('.social__comment-count');
-const bigPictureCommentsLoader = bigPicture.querySelector('.comments-loader');
+const bigPictureCommentsLoader = document.querySelector('.comments-loader');
+const bigPictureClose = bigPicture.querySelector('#picture-cancel');
 
-const createCommentElement = (comment) => {
-  const commentElement = createElement('li', 'social__comment');
-  const commentAvatar = createElement('img', 'social__picture');
-  const commentText = createElement('p', 'social__text');
+const createCommentElement = ({id, avatar, name, message}) => {
+  const commentElement = commentTemplate.cloneNode(true);
 
-  commentElement.dataset.id = comment.id;
-  commentAvatar.src = comment.avatar;
-  commentAvatar.alt = comment.name;
-  commentAvatar.width = AVATAR_SIZE;
-  commentAvatar.height = AVATAR_SIZE;
-  commentText.textContent = comment.message;
-
-  commentElement.appendChild(commentAvatar);
-  commentElement.appendChild(commentText);
+  commentElement.dataset.id = id;
+  commentElement.querySelector('.social__picture').src = avatar;
+  commentElement.querySelector('.social__picture').alt = name;
+  commentElement.querySelector('.social__text').textContent = message;
 
   return commentElement;
 };
@@ -40,6 +34,17 @@ const renderComments = (comments) => {
   commentsList.appendChild(commentsFragment);
 };
 
+const loadComments = (comments) => {
+  const splicedComments = comments.splice(0, COMMENTS_LIMIT);
+
+  bigPictureCommentsLoader.classList.remove('hidden');
+  renderComments(splicedComments);
+
+  if (comments.length === 0) {
+    bigPictureCommentsLoader.classList.add('hidden');
+  }
+};
+
 const fillBigPicture = ({url, likes, description, comments}) => {
   bigPictureImage.src = url;
   pictureLikesCount.textContent = likes;
@@ -47,15 +52,15 @@ const fillBigPicture = ({url, likes, description, comments}) => {
   pictureCaption.textContent = description;
 
   commentsList.innerHTML = ''; // Удаляем дефолтные комментарии из разметки
-  renderComments(comments);
+  loadComments(comments);
 
+  body.classList.add('modal-open');
   bigPicture.classList.remove('hidden');
   bigPictureCommentsCount.classList.add('hidden');
-  bigPictureCommentsLoader.classList.add('hidden');
-  body.classList.add('modal-open');
 
   document.addEventListener('keydown', onBigPictureEscKeydown);
   bigPictureClose.addEventListener('click', onBigPictureCloseClick);
+  bigPictureCommentsLoader.addEventListener('click', () => loadComments(comments));
 };
 
 const closeBigPicture = () => {
