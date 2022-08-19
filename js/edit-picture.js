@@ -54,6 +54,12 @@ const initSlider = (effect) => {
   });
 };
 
+// Изменение масштаба изображения
+const setScale = (value) => {
+  imagePreview.style.transform = `scale(${value/100})`;
+  scaleValue.value = `${value  }%`;
+};
+
 // Сброс эффектов, применённых к изображению
 const resetEffect = () => {
   if (activeEffect) {
@@ -61,15 +67,9 @@ const resetEffect = () => {
     sliderElement.noUiSlider.destroy();
   }
 
+  setScale(100);
   imagePreview.style.filter = null;
-  imagePreview.style.transform = null;
   sliderContainer.classList.add('hidden');
-};
-
-// Изменение масштаба изображения
-const setScale = (value) => {
-  imagePreview.style.transform = `scale(${value/100})`;
-  scaleValue.value = `${value  }%`;
 };
 
 const onScaleSmallerClick = () => {
